@@ -9,7 +9,7 @@ header {
     align-items: center;
     background-image: url(img/paysage_neige.jpg);
     background-size: cover;
-    background-position: 0 60%;
+    background-position: 0 50%;
 }
 
 h1 {
@@ -75,4 +75,24 @@ section {
     font-size: 3em;
     color: red;
     margin-top: 0;
+}
+
+.winwin {
+    background-image: url(img/fondecran.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #fff;
+    justify-content: center;
+    align-items: center;
+}
+
+.winwin h1 {
+    font-size: 6em;
 }

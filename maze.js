@@ -116,6 +116,7 @@ const generateMaze = maze => { // fonction générant un labyrinthe, qui prend e
     document.body.addEventListener('keydown', (e) => {
         const mazes = [lvl1, lvl2, lvl3, lvl4] // tableau contenant les différents labyrinthes
         const section = document.querySelector('section')
+        const win = document.querySelector('.winwin')
         const lines = section.children // tableau contenant chaque lignes du labyrinthe
         const line = []
         for (let k = 0; k < lines.length; k++) {
@@ -145,14 +146,15 @@ const generateMaze = maze => { // fonction générant un labyrinthe, qui prend e
             y = newDest.y
             if (line[newDest.y][newDest.x].className.match('tresor')) {
                 console.log('gagné')
-                alert('You win!!!')
+                
                 nblvl++
                 seconds = 0
                 minutes = 0
                 if (mazes[nblvl] !== undefined) {
+                    alert('You win!!!')
                     generateMaze(mazes[nblvl])
                 } else {
-                    alert('Well done !!')
+                    win.style.display = 'flex'
                     clearInterval(interval)
                 }
             }
