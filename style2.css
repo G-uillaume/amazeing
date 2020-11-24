@@ -1,6 +1,28 @@
+body {
+    margin: 0;
+    background-color: rgb(219, 229, 239);
+}
+
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url(img/paysage_neige.jpg);
+    background-size: cover;
+    background-position: 0 60%;
+}
+
+h1 {
+    font-family: 'Mountains of Christmas', cursive;
+    font-size: 3em;
+    color: rgb(179, 15, 15)
+}
+
 main {
+    margin-top: 50px;
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 
 section {
@@ -8,34 +30,49 @@ section {
 }
 
 .lines {
-    height: 30px;
+    height: 40px;
     display: flex;
 }
 
 .tiles {
-    width: 30px;
-    height: 30px;
-    border: 1px solid black;
+    width: 40px;
+    height: 40px;
+    /* border: 1px solid black; */
     box-sizing: border-box;
 
 }
 
 .wall {
-    background-color: #333;
+    background-image: url(img/sapin.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: #eee;
 }
 
 .path {
-    background-color: green;
+    background-image: url(img/neige.png);
 }
 
 .perso {
-    background-color: red;
-    width: 15px;
-    height: 15px;
-    border-radius: 50%;
-    margin: 7.5px;
+    background-image: url(img/bonhomme-de-neige.png);
+    width: 30px;
+    height: 30px;
+    background-repeat: no-repeat;
+    background-position: center;
+    /* border-radius: 50%; */
+    /* margin: 7.5px; */
 }
 
 .tresor {
-    background-color: yellow;
+    background-image: url(img/boite-cadeau.png);
+    background-color: #eee;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.timer {
+    font-family: 'Mountains of Christmas', cursive;
+    font-size: 3em;
+    color: red;
+    margin-top: 0;
 }

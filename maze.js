@@ -33,19 +33,60 @@ const lvl3 =
 *T.*****
 ********`
 
-const generateMaze = maze => {
-    const main = document.querySelector('main')
-    main.innerHTML = ''
+const lvl4 =
+    `***S******.**T.
+.**.....**.***.
+.*..******...*.
+...****....*...
+.*....****.*.**
+.*.**...**.*..*
+...*..****.**.*
+**...*.*.*..*..
+****.......****`
+
+let nblvl = 0
+let seconds = 0;
+let minutes = 0;
+const main = document.querySelector('main')
+const section = document.createElement('section')
+const time = document.createElement('div')
+const p = document.createElement('p');
+p.className = 'timer'
+time.appendChild(p)
+main.appendChild(section)
+main.appendChild(time)
+function timer() {
+    const para = document.querySelector('p')
+    if (seconds >= 0) {
+        para.textContent = seconds + ' s'
+        if (seconds > 60) {
+                para.textContent = minutes + ' mn ' + (seconds - (minutes * 60)) + ' s'
+                
+        }
+    }
+    if (seconds % 60 === 0 && seconds !== 0) {
+        para.textContent = (minutes + 1) + ' mn'
+        minutes++
+        
+    }
+    seconds++
+}
+const interval = setInterval(timer, 1000)
+
+
+
+const generateMaze = maze => { // fonction générant un labyrinthe, qui prend en paramètre le template du labyrinthe
+    section.innerHTML = ''
     const arr = maze.split('\n')
     let i = 0;
-    let j = 0;
-    let x;
-    let y;
+    let j = 0; // variables d'incrémentation permettant d'assigner les coordonnées de chaque case
+    let x; // coordonnées sur l'axe horizontal
+    let y; // coordonnées sur l'axe vertical
 
     for (let elem of arr) {
         const row = document.createElement('div')
         row.className = 'lines'
-        main.appendChild(row)
+        section.appendChild(row)
         for (let sign of elem) {
             const tile = document.createElement('div')
             tile.className = 'tiles'
@@ -59,6 +100,7 @@ const generateMaze = maze => {
                     tile.appendChild(perso)
                     x = i % elem.length
                     y = j
+                    console.log(x, y)
                 } else if (sign === 'T') {
                     tile.className += ' tresor'
                 }
@@ -68,79 +110,55 @@ const generateMaze = maze => {
         }
         j++
     }
-
-
+    
+    
 
     document.body.addEventListener('keydown', (e) => {
-        const lines = main.children
+        const mazes = [lvl1, lvl2, lvl3, lvl4] // tableau contenant les différents labyrinthes
+        const section = document.querySelector('section')
+        const lines = section.children // tableau contenant chaque lignes du labyrinthe
         const line = []
         for (let k = 0; k < lines.length; k++) {
-            line[k] = lines[k].children
+            line[k] = lines[k].children // le tableau line devient un tableau en deux dimensions, chaque indice correspondant à une ligne et contenant toutes les cases de la ligne
         }
         const perso = document.querySelector('.perso')
+        let newDest = {
+            x: x,
+            y: y
+        }
         if (e.key === 'ArrowRight') {
-            x++
-            if (line[y][x] === undefined) {
-                console.log('trop loin')
-                x--
-            } else if (line[y][x].className.match('tresor')) {
-                alert('You win !!!')
-            } else if (line[y][x].className.match('path')) {
-                console.log('OK')
-                let dest = line[y][x]
-                dest.appendChild(perso)
-            } else {
-                console.log('MUR!!!')
-                x--
-            }
+            newDest.x++
         }
         if (e.key === 'ArrowLeft') {
-            x--
-            if (line[y][x] === undefined) {
-                console.log('trop loin')
-                x++
-            } else if (line[y][x].className.match('tresor')) {
-                alert('You win !!!')
-            } else if (line[y][x].className.match('path')) {
-                console.log('OK')
-                let dest = line[y][x]
-                dest.appendChild(perso)
-            } else {
-                console.log('MUR!!!')
-                x++
-            }
+            newDest.x--
         }
         if (e.key === 'ArrowUp') {
-            y--
-            if (line[y] === undefined) {
-                console.log('trop loin')
-                y++
-            } else if (line[y][x].className.match('tresor')) {
-                alert('You win !!!')
-            } else if (line[y][x].className.match('path')) {
-                console.log('OK')
-                let dest = line[y][x]
-                dest.appendChild(perso)
-            } else {
-                console.log('MUR!!!')
-                y++
-            }
+            newDest.y--
         }
         if (e.key === 'ArrowDown') {
-            y++
-            if (line[y] === undefined) {
-                console.log('trop loin')
-                y--
-            } else if (line[y][x].className.match('tresor')) {
-                alert('You win !!!')
-            } else if (line[y][x].className.match('path')) {
-                console.log('OK')
-                let dest = line[y][x]
-                dest.appendChild(perso)
-            } else {
-                console.log('MUR!!!')
-                y--
+            newDest.y++
+        }
+        if (line[newDest.y] !== undefined && line[newDest.y][newDest.x] !== undefined && !line[newDest.y][newDest.x].className.match('wall')) {
+            let dest = line[newDest.y][newDest.x]
+            dest.appendChild(perso)
+            x = newDest.x
+            y = newDest.y
+            if (line[newDest.y][newDest.x].className.match('tresor')) {
+                console.log('gagné')
+                alert('You win!!!')
+                nblvl++
+                seconds = 0
+                minutes = 0
+                if (mazes[nblvl] !== undefined) {
+                    generateMaze(mazes[nblvl])
+                } else {
+                    alert('Well done !!')
+                    clearInterval(interval)
+                }
             }
         }
     })
 }
+
+
+generateMaze(lvl1)
