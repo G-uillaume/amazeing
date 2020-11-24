@@ -44,6 +44,21 @@ const lvl4 =
 **...*.*.*..*..
 ****.......****`
 
+const lvl5 = 
+`****....*****......*********
+****.**.*.....****......****
+**...**...*******..***.*****
+**.*******....*.******.....*
+**...*...*.**.*....*******.*
+****.*.*...**.*.**.*****.*.*
+****.*..*****S*T**.*.....***
+*..*.**.**********...***.***
+*.**....**.*****.******..***
+*..***.**....***.......*...*
+**.***.**.**.***.***.**..*.*
+**........**.....***.*****.*
+********************.......*`
+
 let nblvl = 0
 let seconds = 0;
 let minutes = 0;
@@ -114,7 +129,7 @@ const generateMaze = maze => { // fonction générant un labyrinthe, qui prend e
     
 
     document.body.addEventListener('keydown', (e) => {
-        const mazes = [lvl1, lvl2, lvl3, lvl4] // tableau contenant les différents labyrinthes
+        const mazes = [lvl1, lvl2, lvl3, lvl4, lvl5] // tableau contenant les différents labyrinthes
         const section = document.querySelector('section')
         const win = document.querySelector('.winwin')
         const lines = section.children // tableau contenant chaque lignes du labyrinthe
