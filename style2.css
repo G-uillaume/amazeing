@@ -1,3 +1,7 @@
+html {
+    height: 100vh;
+}
+
 body {
     margin: 0;
     background-color: rgb(219, 229, 239);
@@ -19,14 +23,14 @@ h1 {
 }
 
 main {
-    margin-top: 50px;
+    margin-top: 5px;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
 section {
-    margin: 20px;
+    margin: 5px;
 }
 
 .lines {
@@ -58,9 +62,6 @@ section {
     width: 30px;
     height: 30px;
     background-repeat: no-repeat;
-    background-position: center;
-    /* border-radius: 50%; */
-    /* margin: 7.5px; */
 }
 
 .tresor {

@@ -44,8 +44,8 @@ const lvl4 =
 **...*.*.*..*..
 ****.......****`
 
-const lvl5 = 
-`****....*****......*********
+const lvl5 =
+    `****....*****......*********
 ****.**.*.....****......****
 **...**...*******..***.*****
 **.*******....*.******.....*
@@ -59,6 +59,22 @@ const lvl5 =
 **........**.....***.*****.*
 ********************.......*`
 
+const lvl6 =
+    `...................................
+...................................
+............S......................
+...................................
+...................................
+...................................
+...................................
+...................................
+............................T......
+...................................
+...................................
+...................................
+...................................
+...................................`
+
 let nblvl = 0
 let seconds = 0;
 let minutes = 0;
@@ -70,34 +86,35 @@ p.className = 'timer'
 time.appendChild(p)
 main.appendChild(section)
 main.appendChild(time)
+
 function timer() {
     const para = document.querySelector('p')
     if (seconds >= 0) {
         para.textContent = seconds + ' s'
         if (seconds > 60) {
-                para.textContent = minutes + ' mn ' + (seconds - (minutes * 60)) + ' s'
-                
+            para.textContent = minutes + ' mn ' + (seconds - (minutes * 60)) + ' s'
+
         }
     }
     if (seconds % 60 === 0 && seconds !== 0) {
         para.textContent = (minutes + 1) + ' mn'
         minutes++
-        
+
     }
     seconds++
 }
 const interval = setInterval(timer, 1000)
 
-
+ // coordonnées sur l'axe vertical
 
 const generateMaze = maze => { // fonction générant un labyrinthe, qui prend en paramètre le template du labyrinthe
     section.innerHTML = ''
     const arr = maze.split('\n')
     let i = 0;
     let j = 0; // variables d'incrémentation permettant d'assigner les coordonnées de chaque case
-    let x; // coordonnées sur l'axe horizontal
-    let y; // coordonnées sur l'axe vertical
-
+    let x = 0; // coordonnées sur l'axe horizontal
+    let y = 0;
+    console.log(i, j, x, y)
     for (let elem of arr) {
         const row = document.createElement('div')
         row.className = 'lines'
@@ -115,7 +132,7 @@ const generateMaze = maze => { // fonction générant un labyrinthe, qui prend e
                     tile.appendChild(perso)
                     x = i % elem.length
                     y = j
-                    console.log(x, y)
+                    console.log(i, j, x, y)
                 } else if (sign === 'T') {
                     tile.className += ' tresor'
                 }
@@ -125,10 +142,11 @@ const generateMaze = maze => { // fonction générant un labyrinthe, qui prend e
         }
         j++
     }
-    
-    
 
-    document.body.addEventListener('keydown', (e) => {
+
+
+    document.body.addEventListener('keyup', (e) => {
+
         const mazes = [lvl1, lvl2, lvl3, lvl4, lvl5] // tableau contenant les différents labyrinthes
         const section = document.querySelector('section')
         const win = document.querySelector('.winwin')
@@ -142,26 +160,32 @@ const generateMaze = maze => { // fonction générant un labyrinthe, qui prend e
             x: x,
             y: y
         }
+        
+        console.log(newDest.x, newDest.y)
+        console.log(x, y)
+        
         if (e.key === 'ArrowRight') {
             newDest.x++
         }
-        if (e.key === 'ArrowLeft') {
+        else if (e.key === 'ArrowLeft') {
             newDest.x--
         }
-        if (e.key === 'ArrowUp') {
+        else if (e.key === 'ArrowUp') {
             newDest.y--
         }
-        if (e.key === 'ArrowDown') {
+        else if (e.key === 'ArrowDown') {
             newDest.y++
+        } else { 
+            newDest.x = newDest.x
+            newDest.y = newDest.y
         }
         if (line[newDest.y] !== undefined && line[newDest.y][newDest.x] !== undefined && !line[newDest.y][newDest.x].className.match('wall')) {
             let dest = line[newDest.y][newDest.x]
             dest.appendChild(perso)
+            
             x = newDest.x
             y = newDest.y
-            if (line[newDest.y][newDest.x].className.match('tresor')) {
-                console.log('gagné')
-                
+            if (dest.className.match('tresor')) {
                 nblvl++
                 seconds = 0
                 minutes = 0
@@ -177,5 +201,4 @@ const generateMaze = maze => { // fonction générant un labyrinthe, qui prend e
     })
 }
 
-
-generateMaze(lvl1)
+window.addEventListener('load', generateMaze(lvl1))
