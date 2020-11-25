@@ -103,12 +103,45 @@ const lvl7 =
 .*.*.*.***.***.*****.
 S....*.........*.....`
 
+const lvl8 =
+    `...*...*.......*.......*...*...
+.*.*.*.*.*****.*.*.***.*.***.*.
+.*...*...*...*.*.*.*.....*...*.
+.*********.***.*.*.***.***.***.
+.*...*.......*.*.*...*.*...*...
+.*.***.*****.*.*.***.***.***.*.
+.*...*.*...*...*.*.*.*...*...*.
+.***.*.***.*****.*.*.*.***.****
+...*.........*.....*.....*.....
+.*.*********.*.*************.*.
+.*...*.....*.*T*...*.......*.*.
+.***.*.*****.***.*.*.*****.***.
+.*...*...........*.*...*...*...
+.*.***.***********.***.*.***.**
+.*...*...*.*...*.*.*...*...*...
+****.***.*.*.*.*.*.*.*****.***.
+.....*.....*.*.*...*.*...*.....
+.***********.*.*.***.*.*******.
+.............*.*.*...*.....*...
+.*************.*.*.*.***.***.**
+.*.........*...*.*.*...*.*...*.
+.*.*****.***.***.*****.*.*.***.
+.*.*.....*...*.*.....*.*.*.....
+.***.*.***.***.*****.*.*.*****.
+.....*.*...*...*.....*.*.*.....
+******.*.***.*.*.*****.*.*.****
+.......*...*.*.*.*.....*.*.....
+.*********.*.***.***.***.*****.
+.*.........*...*.*...*.........
+**.*********.*.*.*.***.********
+S..*.........*.....*...........`
+
 let nblvl = 0
 let seconds = 0
 let minutes = 0
 /*--------------------------------*/
-let i = 0   
-let j = 0 
+let i = 0
+let j = 0
 // variables servant à définir la position du perso et vérifier la position lors des déplacements
 let x
 let y
@@ -155,11 +188,11 @@ const generateMaze = maze => {
     section.innerHTML = ''
     const arr = maze.split('\n')
 
-    setTimeout(function() {
+    setTimeout(function () {
         const welcome = document.querySelector('.welcome')
         welcome.style.display = 'none'
     }, 2000)
-    
+
 
     for (elem of arr) {
         const row = document.createElement('div')
@@ -187,7 +220,7 @@ const generateMaze = maze => {
         }
         j++
     }
-    if (j > 19) { // redimensionnement des cases pour éviter le scroll auto
+    if (j > 19 && j < 25) { // redimensionnement des cases pour éviter le scroll auto
         const rows = section.children
         const tiles = []
         for (let o = 0; o < rows.length; o++) {
@@ -204,10 +237,32 @@ const generateMaze = maze => {
             }
         }
     }
+    if (j > 25) { // redimensionnement des cases pour éviter le scroll auto
+        const rows = section.children
+        const tiles = []
+        const perso = document.querySelector('.perso')
+        perso.style.backgroundImage = 'url(img/bonhomme-petit.png)'
+        for (let o = 0; o < rows.length; o++) {
+            tiles[o] = rows[o].children
+        }
+        console.log(rows.length, tiles.length)
+        for (line of rows) {
+            line.style.height = '24px'
+        }
+        for (let q = 0; q < tiles.length; q++) {
+            for (tile of tiles[q]) {
+                tile.style.height = '24px'
+                tile.style.width = '24px'
+                if (tile.className.match('wall')) {
+                    tile.style.backgroundImage = 'url(img/sapin-petit.png)'
+                }
+            }
+        }
+    }
 }
 
 const Move = e => {
-    const mazes = [lvl1, lvl2, lvl3, lvl4, lvl5, lvl6, lvl7]
+    const mazes = [lvl1, lvl2, lvl3, lvl4, lvl5, lvl6, lvl7, lvl8]
     const section = document.querySelector('section')
     const win = document.querySelector('.winwin')
     // création d'un tableau à deux niveaux pour récupérer le labyrinthe tel qu'il a été généré
@@ -218,7 +273,7 @@ const Move = e => {
     }
     const perso = document.querySelector('.perso')
     console.log(perso)
-    let newDest = {  // pour checker les cases de destinations
+    let newDest = { // pour checker les cases de destinations
         x: x,
         y: y
     }
