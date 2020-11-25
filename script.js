@@ -179,7 +179,7 @@ const generateMaze = maze => {
 }
 
 const Move = e => {
-    const mazes = [lvl1, lvl2, lvl3, lvl4, lvl5, lvl6]
+    const mazes = [lvl1, lvl2, lvl3, lvl4, lvl5, lvl6, lvl7]
     const section = document.querySelector('section')
     const win = document.querySelector('.winwin')
     const lines = section.children
