@@ -59,20 +59,41 @@ const lvl5 =
 **........**.....***.*****.*
 ********************.......*`
 
-
 let nblvl = 0
-const main = document.querySelector('main')
-const section = document.createElement('section')
-const time = document.createElement('div')
-const p = document.createElement('p')
-p.className = 'time'
-time.appendChild(p)
-main.appendChild(section)
-main.appendChild(time)
+let seconds = 0
+let minutes = 0
 let i = 0
 let j = 0
 let x
 let y
+
+const main = document.querySelector('main')
+const section = document.createElement('section')
+const time = document.createElement('div')
+const p = document.createElement('p')
+p.className = 'timer'
+time.appendChild(p)
+main.appendChild(section)
+main.appendChild(time)
+
+const timer = () => {
+    const para = document.querySelector('p')
+    if (seconds >= 0) {
+        para.textContent = seconds + ' s'
+        if (seconds > 60) {
+            para.textContent = minutes + ' mn ' + (seconds - (minutes * 60)) + ' s'
+
+        }
+    }
+    if (seconds % 60 === 0 && seconds !== 0) {
+        para.textContent = (minutes + 1) + ' mn'
+        minutes++
+
+    }
+    seconds++
+}
+const interval = setInterval(timer, 1000)
+
 const generateMaze = maze => {
     i = 0
     j = 0
@@ -88,7 +109,7 @@ const generateMaze = maze => {
         row.className = 'lines'
         section.appendChild(row)
         for (sign of elem) {
-            const tile = document.createElement('dic')
+            const tile = document.createElement('div')
             tile.className = 'tiles'
             if (sign === '*') {
                 tile.className += ' wall'
@@ -110,8 +131,8 @@ const generateMaze = maze => {
         }
         j++
     }
+    console.log(i, j, x, y)
 }
-// console.log(i, j, x, y)
 
 const Move = e => {
     const mazes = [lvl1, lvl2, lvl3, lvl4, lvl5]
@@ -155,15 +176,18 @@ const Move = e => {
         y = newDest.y
         if (dest.className.match('tresor')) {
             nblvl++
+            seconds = 0
+            minutes = 0
             if (mazes[nblvl] !== undefined) {
                 alert('You win !!!')
                 generateMaze(mazes[nblvl])
             } else {
                 win.style.display = 'flex'
+                clearInterval(interval)
             }
         }
     }
 }
 
 window.addEventListener('load', generateMaze(lvl1))
-document.body.addEventListener('keyup', Move)
+document.body.addEventListener('keydown', Move)
