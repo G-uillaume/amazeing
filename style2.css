@@ -5,28 +5,38 @@ html {
 body {
     margin: 0;
     background-color: rgb(219, 229, 239);
+    background-image: url(img/paysage_neige.jpg);
+    background-size: cover;
 }
 
-header {
+.welcome {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-end;
     background-image: url(img/paysage_neige.jpg);
     background-size: cover;
     background-position: 0 50%;
+    position: absolute;
+    bottom: 0;
+    top: 0;
+    right: 0;
+    left: 0
 }
 
 h1 {
     font-family: 'Mountains of Christmas', cursive;
-    font-size: 3em;
+    font-size: 4em;
     color: rgb(179, 15, 15)
 }
 
 main {
-    margin-top: 5px;
+    height: 100vh;
+    margin: auto auto;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 section {
@@ -72,6 +82,10 @@ section {
 }
 
 .timer {
+    
+}
+
+.timer p {
     font-family: 'Mountains of Christmas', cursive;
     font-size: 3em;
     color: red;
@@ -80,7 +94,7 @@ section {
 
 .winwin {
     background-image: url(img/fondecran.jpg);
-    background-size: contain;
+    background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
     display: none;

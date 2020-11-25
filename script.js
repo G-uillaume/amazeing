@@ -81,7 +81,7 @@ const lvl6 =
 T*.............*...`
 
 const lvl7 =
-    `;........*...........
+    `.........*...........
 ******.*.*****.*****.
 .......*.....*.*T....
 .***********.*.******
@@ -106,19 +106,27 @@ S....*.........*.....`
 let nblvl = 0
 let seconds = 0
 let minutes = 0
-let i = 0
-let j = 0
+/*--------------------------------*/
+let i = 0   
+let j = 0 
+// variables servant à définir la position du perso et vérifier la position lors des déplacements
 let x
 let y
+/*--------------------------------*/
 
 const main = document.querySelector('main')
 const section = document.createElement('section')
 const time = document.createElement('div')
+time.className = 'timer'
+time.style.display = 'flex'
+time.style.justifyContent = 'center'
+time.style.alignSelf = 'center'
 const p = document.createElement('p')
-p.className = 'timer'
 time.appendChild(p)
 main.appendChild(section)
 main.appendChild(time)
+
+
 
 const timer = () => {
     const para = document.querySelector('p')
@@ -139,7 +147,7 @@ const timer = () => {
 const interval = setInterval(timer, 1000)
 
 const generateMaze = maze => {
-    i = 0
+    i = 0 // réinitialisation des variables d'incrémentations, sinon il y avait un problème lors de la génération des niveaux suivants
     j = 0
     x = 0
     y = 0
@@ -147,7 +155,12 @@ const generateMaze = maze => {
     section.innerHTML = ''
     const arr = maze.split('\n')
 
-    // console.log(i, j, x, y)
+    setTimeout(function() {
+        const welcome = document.querySelector('.welcome')
+        welcome.style.display = 'none'
+    }, 2000)
+    
+
     for (elem of arr) {
         const row = document.createElement('div')
         row.className = 'lines'
@@ -165,7 +178,6 @@ const generateMaze = maze => {
                     tile.appendChild(perso)
                     x = i % elem.length
                     y = j
-                    // console.log(i, j, x, y)
                 } else if (sign === 'T') {
                     tile.className += ' tresor'
                 }
@@ -175,13 +187,30 @@ const generateMaze = maze => {
         }
         j++
     }
-    console.log(i, j, x, y)
+    if (j > 19) { // redimensionnement des cases pour éviter le scroll auto
+        const rows = section.children
+        const tiles = []
+        for (let o = 0; o < rows.length; o++) {
+            tiles[o] = rows[o].children
+        }
+        console.log(rows.length, tiles.length)
+        for (line of rows) {
+            line.style.height = '30px'
+        }
+        for (let q = 0; q < tiles.length; q++) {
+            for (tile of tiles[q]) {
+                tile.style.height = '30px'
+                tile.style.width = '30px'
+            }
+        }
+    }
 }
 
 const Move = e => {
     const mazes = [lvl1, lvl2, lvl3, lvl4, lvl5, lvl6, lvl7]
     const section = document.querySelector('section')
     const win = document.querySelector('.winwin')
+    // création d'un tableau à deux niveaux pour récupérer le labyrinthe tel qu'il a été généré
     const lines = section.children
     const line = []
     for (let k = 0; k < lines.length; k++) {
@@ -189,27 +218,20 @@ const Move = e => {
     }
     const perso = document.querySelector('.perso')
     console.log(perso)
-    let newDest = {
+    let newDest = {  // pour checker les cases de destinations
         x: x,
         y: y
     }
 
-    // console.log(newDest.x, newDest.y)
-    console.log(x, y)
     if (e.key === 'ArrowRight') {
-        console.log('right')
         newDest.x++
     } else if (e.key === 'ArrowLeft') {
-        console.log('left')
         newDest.x--
     } else if (e.key === 'ArrowDown') {
-        console.log('down')
         newDest.y++
     } else if (e.key === 'ArrowUp') {
-        console.log('up')
         newDest.y--
     } else {
-        console.log('nothing')
         newDest.x = newDest.x
         newDest.y = newDest.y
     }
