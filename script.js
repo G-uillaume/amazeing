@@ -233,5 +233,5 @@ const Move = e => {
     }
 }
 
-window.addEventListener('load', generateMaze(lvl6))
+window.addEventListener('load', generateMaze(lvl1))
 document.body.addEventListener('keydown', Move)

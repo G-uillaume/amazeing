@@ -80,7 +80,7 @@ section {
 
 .winwin {
     background-image: url(img/fondecran.jpg);
-    background-size: cover;
+    background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
     display: none;
